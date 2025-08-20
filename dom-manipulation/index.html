@@ -14,6 +14,11 @@
     <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
     <button onclick="addQuote()">Add Quote</button>
   </div>
+    <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+    <button onclick="exportQuotes()">Export Quotes</button>
+    <h3>Last Viewed Quote (This Session):</h3>
+    <div id="quoteDisplay"></div>
+
     <script src="script.js"></script>
   </body>
   </html>

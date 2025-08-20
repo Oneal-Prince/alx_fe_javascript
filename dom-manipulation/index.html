@@ -17,7 +17,12 @@
     <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
     <button onclick="exportQuotes()">Export Quotes</button>
     <h3>Last Viewed Quote (This Session):</h3>
-    <div id="quoteDisplay"></div>
+    <div id="lastViewedQuote"></div>
+     
+  <select id="categoryFilter" onchange="filterQuotes()">
+    <option value="all">All Categories</option>
+    <!-- Dynamically populated categories -->
+  </select>
 
     <script src="script.js"></script>
   </body>

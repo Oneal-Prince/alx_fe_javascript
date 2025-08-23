@@ -1,12 +1,12 @@
-function fetchQuotesFromServer() {
-  fetch("https://jsonplaceholder.typicode.com/posts")
-    .then(response => {
+const mockApi = 'https://jsonplaceholder.typicode.com/posts'
+
+async function fetchQuotesFromServer() {
+  const mockApi = await fetch(mockApi)
       if (!response.ok) {
         throw new Error("Network response was not ok.");
       }
       return response.json();
-    })
-    .then(data => {
+    }
       const serverQuotes = data.map(post => ({
         id: post.id,
         text: post.title,
@@ -14,11 +14,7 @@ function fetchQuotesFromServer() {
       }));
 
       mergeServerQuotes(serverQuotes); 
-    })
-    .catch(error => {
       console.error("Failed to fetch quotes from server:", error);
-    });
-}
 
 // Call it on page load or setInterval
 fetchQuotesFromServer(); // Optional: wrap in setInterval for periodic fetch

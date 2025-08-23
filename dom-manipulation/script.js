@@ -48,3 +48,4 @@ function notifyUser(message) {
     note.textContent = "";
   }, 5000);
 }
+startPeriodicFetch();

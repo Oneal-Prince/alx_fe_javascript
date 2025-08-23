@@ -70,6 +70,10 @@ setInterval(() => {
   fetchQuotesFromServer();
 }, 10000); // 10,000 ms = 10 seconds
 
+function saveQuotesToLocalStorage() {
+  localStorage.setItem("quotes", JSON.stringify(localQuotes));
+}
+
 function notifyUser(message) {
   const note = document.getElementById("notification");
   note.textContent = message;

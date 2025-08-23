@@ -1,24 +1,27 @@
-
-function startPeriodicFetch() {
-  setInterval(fetchQuotesFromServer, 10000); // every 10 seconds
-}
-
-// Fetch from simulated API (e.g. JSONPlaceholder)
 function fetchQuotesFromServer() {
-  fetch("https://stub.muindetuva.com/public-api")
-    .then(response => response.json())
-    .then(serverData => {
-      const serverQuotes = serverData.map(post => ({
+  fetch("https://jsonplaceholder.typicode.com/posts")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok.");
+      }
+      return response.json();
+    })
+    .then(data => {
+      const serverQuotes = data.map(post => ({
         id: post.id,
         text: post.title,
         category: "Imported"
       }));
 
-      // Simulate conflict resolution (server wins)
-      mergeServerQuotes(serverQuotes);
+      mergeServerQuotes(serverQuotes); 
     })
-    .catch(error => console.error("Server fetch failed:", error));
+    .catch(error => {
+      console.error("Failed to fetch quotes from server:", error);
+    });
 }
+
+// Call it on page load or setInterval
+fetchQuotesFromServer(); // Optional: wrap in setInterval for periodic fetch
 function mergeServerQuotes(serverQuotes) {
   let updated = false;
 

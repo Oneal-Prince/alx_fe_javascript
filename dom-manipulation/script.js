@@ -85,3 +85,6 @@ function notifyUser(message, type = "info") {
     note.textContent = "";
   }, 5000); // Clear after 5 seconds
 }
+notifyUser("Quotes synced with server!");
+notifyUser("Conflicts found — server data used.", "warning");
+notifyUser("Sync failed. Please try again.", "error");

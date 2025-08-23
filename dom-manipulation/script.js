@@ -16,30 +16,24 @@ async function fetchQuotesFromServer() {
       mergeServerQuotes(serverQuotes); 
       console.error("Failed to fetch quotes from server:", error);
 
-// Call it on page load or setInterval
-fetchQuotesFromServer(); // Optional: wrap in setInterval for periodic fetch
-function mergeServerQuotes(serverQuotes) {
-  let updated = false;
-
-  serverQuotes.forEach(serverQuote => {
-    const localIndex = localQuotes.findIndex(q => q.id === serverQuote.id);
-    
-    if (localIndex === -1) {
-      localQuotes.push(serverQuote); // new quote from server
-      updated = true;
-    } else if (localQuotes[localIndex].text !== serverQuote.text) {
-      
-      localQuotes[localIndex] = serverQuote;
-      updated = true;
-    }
+function postQuoteToServer(quote) {
+  fetch("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(quote)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("Quote successfully posted to server:", data);
+    notifyUser("Quote synced to server.");
+  })
+  .catch(error => {
+    console.error("Error posting quote:", error);
   });
-
-  if (updated) {
-    notifyUser("Quotes updated from server (conflicts resolved).");
-    updateCategoryOptions();
-    renderLastViewedQuote();
-  }
 }
+
 function notifyUser(message) {
   const note = document.getElementById("notification");
   note.textContent = message;

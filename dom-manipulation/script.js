@@ -63,6 +63,13 @@ function syncQuotes() {
       notifyUser("⚠️ Sync failed.");
     });
 }
+
+// Start syncing every 10 seconds
+setInterval(() => {
+  console.log("🔁 Checking for new quotes from server...");
+  fetchQuotesFromServer();
+}, 10000); // 10,000 ms = 10 seconds
+
 function notifyUser(message) {
   const note = document.getElementById("notification");
   note.textContent = message;

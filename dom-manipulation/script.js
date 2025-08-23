@@ -1,11 +1,11 @@
-// Periodic fetch from mock server (simulating real-time sync)
+
 function startPeriodicFetch() {
   setInterval(fetchQuotesFromServer, 10000); // every 10 seconds
 }
 
 // Fetch from simulated API (e.g. JSONPlaceholder)
 function fetchQuotesFromServer() {
-  fetch("https://jsonplaceholder.typicode.com/posts?_limit=5")
+  fetch("https://stub.muindetuva.com/public-api")
     .then(response => response.json())
     .then(serverData => {
       const serverQuotes = serverData.map(post => ({
@@ -29,7 +29,7 @@ function mergeServerQuotes(serverQuotes) {
       localQuotes.push(serverQuote); // new quote from server
       updated = true;
     } else if (localQuotes[localIndex].text !== serverQuote.text) {
-      // Conflict: server wins
+      
       localQuotes[localIndex] = serverQuote;
       updated = true;
     }

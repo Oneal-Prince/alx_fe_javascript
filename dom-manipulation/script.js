@@ -74,11 +74,14 @@ function saveQuotesToLocalStorage() {
   localStorage.setItem("quotes", JSON.stringify(localQuotes));
 }
 
-function notifyUser(message) {
+function notifyUser(message, type = "info") {
   const note = document.getElementById("notification");
+  if (!note) return;
+
   note.textContent = message;
+  note.style.color = type === "error" ? "red" : type === "warning" ? "orange" : "green";
+
   setTimeout(() => {
     note.textContent = "";
-  }, 5000);
+  }, 5000); // Clear after 5 seconds
 }
-startPeriodicFetch();

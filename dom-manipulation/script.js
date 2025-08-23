@@ -1,7 +1,6 @@
 function populateCategories() {
   const categoryFilter = document.getElementById("categoryFilter");
   const categories = [...new Set(quotes.map(q => q.category))];
-
   categoryFilter.innerHTML = `<option value="All">All Categories</option>`;
   categories.forEach(cat => {
     const option = document.createElement("option");

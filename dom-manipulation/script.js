@@ -1,3 +1,25 @@
+function createAddQuoteForm() {
+  const formContainer = document.getElementById("addQuoteForm");
+
+  const textInput = document.createElement("input");
+  textInput.id = "newQuoteText";
+  textInput.placeholder = "Enter quote text";
+
+  const categoryInput = document.createElement("input");
+  categoryInput.id = "newQuoteCategory";
+  categoryInput.placeholder = "Enter category";
+
+  const addBtn = document.createElement("button");
+  addBtn.textContent = "Add Quote";
+  addBtn.addEventListener("click", addQuote);
+
+  formContainer.appendChild(textInput);
+  formContainer.appendChild(categoryInput);
+  formContainer.appendChild(addBtn);
+}
+
+
+
 const mockApi = 'https://jsonplaceholder.typicode.com/posts'
 
 async function fetchQuotesFromServer() {

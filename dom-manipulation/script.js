@@ -7,8 +7,6 @@ const quotes = [
 
 const quoteDisplay = document.getElementById("quoteDisplay");
 const newQuoteBtn = document.getElementById("newQuote");
-
-
 function showRandomQuote() {
   if (quotes.length === 0) {
     quoteDisplay.textContent = "No quotes available.";
@@ -81,9 +79,44 @@ function addQuote() {
   const newQuote = { text, category };
   quotes.push(newQuote);
   localStorage.setItem("quotes", JSON.stringify(quotes));
-
+ document.getElementById("newQuoteText").value = "";
+  document.getElementById("newQuoteCategory").value = "";
+  alert("Quote added successfully!");
 }
 
+function importFromJsonFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const importedQuotes = JSON.parse(e.target.result);
+      if (Array.isArray(importedQuotes)) {
+        const validQuotes = importedQuotes.filter(q => q.text && q.category);
+        quotes = [...quotes, ...validQuotes];
+        localStorage.setItem("quotes", JSON.stringify(quotes));
+        alert("Quotes imported successfully!");
+      } else {
+        alert("Invalid format. Please upload a JSON array of quote objects.");
+      }
+    } catch (err) {
+      alert("Error reading file.");
+    }
+  };
+  reader.readAsText(file);
+}
+document.getElementById("newQuote").addEventListener("click", generateQuote);
+
+function exportQuotes() {
+  const blob = new Blob([JSON.stringify(quotes, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "quotes.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
 
 
 function createAddQuoteForm() {

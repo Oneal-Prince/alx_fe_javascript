@@ -47,6 +47,45 @@ function addQuote() {
     <p><em>Category:</em> ${category}</p>
   `;
 }
+
+
+function generateQuote() {
+  if (quotes.length === 0) {
+    quoteDisplay.textContent = "No quotes available.";
+    document.getElementById("quoteDisplay").textContent = "No quotes available.";
+    return;
+  }
+
+  const randomIndex = Math.floor(Math.random() * quotes.length);
+  const quote = quotes[randomIndex];
+  document.getElementById("quoteDisplay").textContent = `"${quote.text}" — [${quote.category}]`;
+
+  quoteDisplay.innerHTML = `
+    <p><strong>"${quote.text}"</strong></p>
+    <p><em>Category:</em> ${quote.category}</p> `;
+
+  sessionStorage.setItem("lastQuote", JSON.stringify(quote));
+}
+function addQuote() {
+  const text = document.getElementById("newQuoteText").value.trim();
+  const category = document.getElementById("newQuoteCategory").value.trim();
+  if (!text || !category) {
+    alert("Please enter both quote and category.");
+    return;
+  }
+  document.getElementById("newQuoteText").value = "";
+  document.getElementById("newQuoteCategory").value = "";
+  alert("Quote added successfully!");
+  
+
+  const newQuote = { text, category };
+  quotes.push(newQuote);
+  localStorage.setItem("quotes", JSON.stringify(quotes));
+
+}
+
+
+
 function createAddQuoteForm() {
   const formContainer = document.getElementById("addQuoteForm");
 
